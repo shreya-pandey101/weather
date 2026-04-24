@@ -27,6 +27,7 @@
 <p id="result"></p>
 
 <script>
+<script>
 async function getWeather() {
   let city = document.getElementById("city").value;
 
@@ -36,9 +37,18 @@ async function getWeather() {
   let response = await fetch(url);
   let data = await response.json();
 
-  document.getElementById("result").innerHTML =
-    `Temperature: ${data.main.temp}°C <br> Weather: ${data.weather[0].description}`;
+  console.log(data);
+
+  if (data.cod === "404") {
+    document.getElementById("result").innerHTML = "❌ City not found";
+  } else if (data.cod === 401) {
+    document.getElementById("result").innerHTML = "❌ API key error";
+  } else {
+    document.getElementById("result").innerHTML =
+      `🌡️ Temp: ${data.main.temp}°C <br> 🌥️ Weather: ${data.weather[0].description}`;
+  }
 }
+</script>
 </script>
 
 </body>
